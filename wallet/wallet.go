@@ -33,9 +33,13 @@ func (b Bitcoin) String() string {
 	return fmt.Sprintf("%d BTC", b)
 }
 
+//The var keyword allows us to define values global to the package
+var ErrInsufficientFunds = errors.New("cannot withdraw, insufficient funds")
+
+// Question - why setting up point before the function name again?
 func (w *Wallet) Withdraw(amount Bitcoin) error {
 	if amount > w.balance {
-		return errors.New("Oh no")
+		return ErrInsufficientFunds
 	}
 
 	w.balance -= amount
